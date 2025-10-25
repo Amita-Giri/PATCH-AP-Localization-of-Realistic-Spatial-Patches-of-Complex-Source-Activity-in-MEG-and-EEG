@@ -11,6 +11,7 @@ Other helper modules: PATCH_APFunction.py, SimFunction.py, TimeCourses.py, funs_
 
 ## Requirements
 Minimum: Python 3.8+ (tested on 3.8–3.10)  
+For MNE: 0.24.1 compatible with Python 3.8
 Main packages (install with pip):
 
 Simpler combined pip line:
