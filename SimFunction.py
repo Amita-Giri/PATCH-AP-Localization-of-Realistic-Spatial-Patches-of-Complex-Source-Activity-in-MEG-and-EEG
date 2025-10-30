@@ -120,7 +120,6 @@ def SimulationGenerator(fwd, TimeCourses, Patchranks, Smoothness_order, random_s
             ss = kq @ E_i @ sdot
             
             x = x + leadfield @ ss
-            
             # Concatenate
             KQ.append(kq)
             E.append(E_i)
