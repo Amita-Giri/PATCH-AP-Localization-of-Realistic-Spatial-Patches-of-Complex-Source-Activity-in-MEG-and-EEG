@@ -64,3 +64,14 @@ def predict_sources_parallel3(solver_dicts, fwd, info, x_test, sim_info, n_jobs=
 	res = Parallel(n_jobs=n_jobs, backend="loky")(delayed(predict_sources_2)(solver_dicts, fwd, info, x_sample, sim_info_row) for x_sample, (_, sim_info_row) in zip(x_test, sim_info.iterrows()))
 	return res
 
+def predict_sources_parallel_AP_FlexAP(solver_dicts, fwd, info, x_test, sim_info, n_jobs=-1):
+	sap = {"AP": [], "FLEX-AP": []}
+	
+	for x_sample in x_test:
+	    evoked = mne.EvokedArray(x_sample, info, tmin=0)
+	    for solver_dict in solver_dicts:
+	      solver_dict["solver_name"].make_inverse_operator(fwd, evoked, alpha="auto", **solver_dict["make_args"])
+	      sap[solver_dict['display_name']].append(solver_dict["solver_name"].sap)
+		
+	return sap
+
