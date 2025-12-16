@@ -769,6 +769,7 @@ class SolverAlternatingProjections(BaseSolver):
                 if S_AP_2 == S_AP_2_Prev:  # and iter>0:
                     break
         self.candidates = S_AP_2
+        self.sap = self.candidates
         source_covariance = np.sum([np.squeeze(self.gradients[order][dipole].toarray()) for order, dipole in S_AP_2], axis=0)
 
         # Prior-Cov based version 2: Use the selected smooth patches as source covariance priors
