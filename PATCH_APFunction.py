@@ -194,6 +194,7 @@ def weighted_ap(y, n_sources, Weights, max_iter, Lpatch_Fulls, n_orders, diffusi
     
 def J_Estimated(batch_size,n_dipoles,n_timepoints,Y,n_sourcespatch,Bestorder_WAp,BRank_WAp,EstLoc_WAp,Weights,leadfields,Lpatch_Fulls,mult):
     J_pred_Patchh = []
+    EFull = []
     for i in range(0,batch_size):
         J_pred_WAP = np.zeros((n_dipoles,n_timepoints))  
         # check whether the same source is localized again
@@ -268,6 +269,7 @@ def J_Estimated(batch_size,n_dipoles,n_timepoints,Y,n_sourcespatch,Bestorder_WAp
         # Stack the collected sdot vertically
         # --- Step 3: Combine and smooth final source estimate ---
         Sdot = np.vstack(Sdot)
+        EFull.append(E)
         E = np.hstack(E)
         kr = Weights[mult]
         kr = csr_matrix(kr)
@@ -275,7 +277,7 @@ def J_Estimated(batch_size,n_dipoles,n_timepoints,Y,n_sourcespatch,Bestorder_WAp
         J_pred_Patch = kr @ (E @ Sdot) 
         J_pred_Patchh.append(J_pred_Patch)          
                 
-    return J_pred_Patchh
+    return J_pred_Patchh, EFull
 
 # =========================================================================
 # Section 3: Patch RAP-MUSIC Algorithm
